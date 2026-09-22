@@ -174,6 +174,97 @@ h2 em{font-style:italic;color:var(--violet)}
 .copy-btn:hover{background:rgba(139,124,246,.22);box-shadow:0 0 24px rgba(139,124,246,.25)}
 .copy-btn.done{border-color:rgba(110,231,183,.5);background:rgba(110,231,183,.12);color:#9ff0cf}
 
+/* ---------- tuner ---------- */
+#tune .tuner{display:grid;grid-template-columns:1fr 1.15fr;gap:1.6rem;margin-top:3.2rem}
+@media(max-width:920px){#tune .tuner{grid-template-columns:1fr}}
+.ctrl-panel{background:linear-gradient(160deg,var(--glass-strong),var(--glass));border:1px solid var(--stroke);
+  border-radius:20px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);padding:1.8rem 1.7rem}
+.ctrl{margin-bottom:1.5rem}
+.ctrl:last-child{margin-bottom:0}
+.ctrl-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
+.ctrl-head label{font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.ctrl-head output{font-family:var(--mono);font-size:.76rem;color:var(--violet)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,rgba(139,124,246,.55),rgba(110,195,255,.25));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#8b7cf6);border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 0 14px rgba(139,124,246,.8);transition:transform .2s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#8b7cf6);
+  border:1px solid rgba(255,255,255,.5);box-shadow:0 0 14px rgba(139,124,246,.8);cursor:pointer}
+.swatch-row{display:flex;gap:.8rem;margin-top:.7rem}
+.swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;
+  transition:all .3s cubic-bezier(.2,.8,.2,1);position:relative}
+.swatch:hover{transform:scale(1.12)}
+.swatch.on{border-color:rgba(255,255,255,.75);box-shadow:0 0 18px rgba(255,255,255,.25)}
+.swatch[data-p=aurora]{background:radial-gradient(circle at 30% 30%,#fff,#8b7cf6 55%,#6ec3ff)}
+.swatch[data-p=ember]{background:radial-gradient(circle at 30% 30%,#fff,#ff8c3c 55%,#ff3c5a)}
+.swatch[data-p=glacier]{background:radial-gradient(circle at 30% 30%,#fff,#8cbeff 55%,#506eff)}
+.swatch[data-p=neon]{background:radial-gradient(circle at 30% 30%,#fff,#ff50c8 55%,#508cff)}
+.reset-btn{width:100%;margin-top:1.6rem;padding:.75rem;border-radius:10px;border:1px solid var(--stroke-hi);
+  background:var(--glass);color:var(--muted);font-family:var(--sans);font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .35s;letter-spacing:.03em}
+.reset-btn:hover{border-color:rgba(139,124,246,.5);color:var(--text)}
+.tune-stage{position:relative;min-height:460px;border-radius:20px;border:1px solid var(--stroke);overflow:hidden;
+  background:radial-gradient(ellipse at 50% 50%,rgba(139,124,246,.06),transparent 70%)}
+#tuneCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+.tune-hint{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);pointer-events:none}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem;margin-top:3.2rem}
+.step-card{position:relative;padding:2rem 1.8rem;border-radius:20px;border:1px solid var(--stroke);
+  background:linear-gradient(160deg,var(--glass-strong),var(--glass));backdrop-filter:blur(22px);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s}
+.step-card:hover{transform:translateY(-5px);border-color:var(--stroke-hi)}
+.step-num{font-family:var(--serif);font-style:italic;font-size:2.6rem;line-height:1;
+  background:linear-gradient(135deg,var(--warm),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step-card h3{font-size:1.05rem;font-weight:600;margin:1.1rem 0 .5rem}
+.step-card p{color:var(--muted);font-size:.92rem;font-weight:300}
+.step-card p b{color:var(--text);font-weight:500}
+
+/* ---------- related layers ---------- */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.3rem;margin-top:3.2rem}
+.rel-card{display:block;text-decoration:none;color:var(--text);border-radius:18px;border:1px solid var(--stroke);
+  background:linear-gradient(160deg,var(--glass-strong),var(--glass));backdrop-filter:blur(20px);
+  overflow:hidden;transition:all .45s cubic-bezier(.2,.8,.2,1)}
+.rel-card:hover{transform:translateY(-5px);border-color:var(--stroke-hi);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.rel-thumb{height:130px;position:relative;overflow:hidden}
+.rel-thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,transparent 40%,rgba(4,4,9,.5))}
+.rel-card:hover .rel-thumb::after{background:radial-gradient(ellipse at 50% 60%,transparent 55%,rgba(4,4,9,.25))}
+.rel-body{padding:1.1rem 1.2rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+.rel-body h3{font-size:.98rem;font-weight:600}
+.rel-body span{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.rel-arrow{color:var(--dim);transition:all .35s;font-size:1rem}
+.rel-card:hover .rel-arrow{color:var(--violet);transform:translateX(4px)}
+
+/* ---------- faq ---------- */
+.faq{max-width:760px;margin:3.2rem auto 0}
+.faq-item{border:1px solid var(--stroke);border-radius:14px;margin-bottom:.9rem;overflow:hidden;
+  background:linear-gradient(160deg,var(--glass-strong),var(--glass));backdrop-filter:blur(18px);
+  transition:border-color .35s}
+.faq-item:hover{border-color:var(--stroke-hi)}
+.faq-q{padding:1.15rem 1.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  font-weight:500;font-size:.98rem;user-select:none}
+.faq-q .arr{transition:transform .35s;color:var(--dim);font-size:.8rem}
+.faq-item.open .arr{transform:rotate(180deg);color:var(--violet)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .faq-a{max-height:280px}
+.faq-a p{padding:0 1.4rem 1.3rem;color:var(--muted);font-size:.92rem;font-weight:300}
+.faq-a b{color:var(--text);font-weight:500}
+
+/* ---------- final cta ---------- */
+.final-cta{position:relative;z-index:5;max-width:1180px;margin:0 auto;padding:2rem 1.5rem 6rem}
+.cta-card{border-radius:26px;border:1px solid var(--stroke);overflow:hidden;text-align:center;
+  padding:5rem 2rem;position:relative;
+  background:linear-gradient(165deg,rgba(139,124,246,.10),rgba(110,195,255,.04) 55%,var(--glass));
+  backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px)}
+.cta-card::before{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:520px;height:260px;
+  background:radial-gradient(ellipse,rgba(139,124,246,.22),transparent 70%);filter:blur(20px)}
+.cta-card h2{font-size:clamp(2rem,4.5vw,3.2rem);position:relative}
+.cta-card p{color:var(--muted);max-width:480px;margin:1rem auto 2.4rem;font-weight:300;position:relative}
+.cta-row-center{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
 /* ---------- footer ---------- */
 footer{position:relative;z-index:5;border-top:1px solid var(--stroke);margin-top:4rem;
   padding:2.4rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
@@ -196,9 +287,9 @@ footer a:hover{color:var(--text)}
 <nav>
   <div class="brand"><span class="brand-dot"></span>Pinwheel</div>
   <div class="nav-links">
-    <a href="#scene">Scene</a><a href="#craft">Craft</a><a href="#prompt">Prompt</a>
+    <a href="#tune">Tune</a><a href="#craft">Craft</a><a href="#how">How</a><a href="#layers">Layers</a><a href="#faq">FAQ</a>
   </div>
-  <a class="nav-cta" href="#prompt">Get the layer</a>
+  <a class="nav-cta" href="#tune">Tune it live</a>
 </nav>
 
 <header class="hero">
@@ -274,6 +365,133 @@ footer a:hover{color:var(--text)}
   </div>
 </section>
 
+<section id="tune">
+  <div class="sec-label reveal">Live tuner</div>
+  <h2 class="reveal" data-d="1">Don't like the mood?<br><em>Change it. Right here.</em></h2>
+  <p class="sec-sub reveal" data-d="2">Every control below re-renders the galaxy in real time. When it feels right, copy the prompt — your values ride along.</p>
+  <div class="tuner reveal" data-d="2">
+    <div class="ctrl-panel">
+      <div class="ctrl">
+        <div class="ctrl-head"><label>Particles</label><output id="oCount">2400</output></div>
+        <input type="range" id="rCount" min="600" max="5000" step="100" value="2400">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-head"><label>Spiral arms</label><output id="oArms">3</output></div>
+        <input type="range" id="rArms" min="2" max="6" step="1" value="3">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-head"><label>Spin speed</label><output id="oSpin">1.0×</output></div>
+        <input type="range" id="rSpin" min="0" max="4" step="0.1" value="1">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-head"><label>Tilt</label><output id="oTilt">0.58</output></div>
+        <input type="range" id="rTilt" min="0.15" max="1" step="0.01" value="0.58">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-head"><label>Palette</label></div>
+        <div class="swatch-row">
+          <div class="swatch on" data-p="aurora" title="Aurora — warm core, violet arms, cyan rim"></div>
+          <div class="swatch" data-p="ember" title="Ember — fire core, red rim"></div>
+          <div class="swatch" data-p="glacier" title="Glacier — ice white, deep blue rim"></div>
+          <div class="swatch" data-p="neon" title="Neon — magenta core, electric blue rim"></div>
+        </div>
+      </div>
+      <button class="reset-btn" id="resetBtn">Reset to defaults</button>
+    </div>
+    <div class="tune-stage">
+      <canvas id="tuneCanvas"></canvas>
+      <div class="tune-hint">move your cursor over the galaxy</div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="sec-label reveal">How to use</div>
+  <h2 class="reveal" data-d="1">From this page<br><em>to your site.</em></h2>
+  <p class="sec-sub reveal" data-d="2">Three steps. No design skills, no dependencies, no build step.</p>
+  <div class="steps">
+    <div class="step-card reveal" data-d="1">
+      <div class="step-num">1</div>
+      <h3>Tune it live</h3>
+      <p>Settle the mood in the <b>tuner above</b> — particles, arms, spin, tilt, palette. The prompt box updates with your exact values.</p>
+    </div>
+    <div class="step-card reveal" data-d="2">
+      <div class="step-num">2</div>
+      <h3>Copy the prompt</h3>
+      <p>One click copies a structured prompt. Paste it into <b>Claude, Cursor, v0, Copilot</b> — whatever already writes your code.</p>
+    </div>
+    <div class="step-card reveal" data-d="3">
+      <div class="step-num">3</div>
+      <h3>Ship it</h3>
+      <p>Your AI recreates the scene as a <b>single self-contained file</b>, already wired to your layout. Tune again from there if you like.</p>
+    </div>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="sec-label reveal">Related layers</div>
+  <h2 class="reveal" data-d="1">More from<br><em>the same shelf.</em></h2>
+  <p class="sec-sub reveal" data-d="2">Scenes and backgrounds that pair with this one — same craft, different physics.</p>
+  <div class="rel-grid">
+    <a class="rel-card reveal" data-d="1" href="https://www.getlayers.ai/layer/starry-night" target="_blank" rel="noopener">
+      <div class="rel-thumb" style="background:radial-gradient(ellipse at 50% 70%,#1a2440,#040409 70%)"></div>
+      <div class="rel-body"><div><h3>Starry Night</h3><span>Background</span></div><span class="rel-arrow">→</span></div>
+    </a>
+    <a class="rel-card reveal" data-d="2" href="https://www.getlayers.ai/layer/orb" target="_blank" rel="noopener">
+      <div class="rel-thumb" style="background:radial-gradient(circle at 50% 50%,#3d2f6e,#040409 75%)"></div>
+      <div class="rel-body"><div><h3>Orb</h3><span>3D Scene</span></div><span class="rel-arrow">→</span></div>
+    </a>
+    <a class="rel-card reveal" data-d="3" href="https://www.getlayers.ai/layer/purple-dream" target="_blank" rel="noopener">
+      <div class="rel-thumb" style="background:linear-gradient(160deg,#2a1a4e,#0a0a1e 80%)"></div>
+      <div class="rel-body"><div><h3>Purple Dream</h3><span>Background</span></div><span class="rel-arrow">→</span></div>
+    </a>
+    <a class="rel-card reveal" data-d="3" href="https://www.getlayers.ai/layer/epoxy-drift" target="_blank" rel="noopener">
+      <div class="rel-thumb" style="background:radial-gradient(ellipse at 30% 30%,#4e3a2a,#040409 75%)"></div>
+      <div class="rel-body"><div><h3>Epoxy Drift</h3><span>3D Scene</span></div><span class="rel-arrow">→</span></div>
+    </a>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="sec-label reveal">FAQ</div>
+  <h2 class="reveal" data-d="1">Questions,<br><em>answered.</em></h2>
+  <div class="faq">
+    <div class="faq-item reveal" data-d="1">
+      <div class="faq-q">Does it need WebGL or a 3D library?<span class="arr">▾</span></div>
+      <div class="faq-a"><p>No. The galaxy is <b>pure Canvas 2D math</b> — polar coordinates, additive blending, requestAnimationFrame. It runs in any browser made this decade, including low-power phones, and it never asks for a GPU context.</p></div>
+    </div>
+    <div class="faq-item reveal" data-d="2">
+      <div class="faq-q">How heavy is it?<span class="arr">▾</span></div>
+      <div class="faq-a"><p>One HTML file, roughly <b>14 KB</b>, zero network requests after fonts. Compare that to a 4K background video loop — this is ~300× lighter and it never bands or compresses.</p></div>
+    </div>
+    <div class="faq-item reveal" data-d="2">
+      <div class="faq-q">Will my AI really rebuild it from a prompt?<span class="arr">▾</span></div>
+      <div class="faq-a"><p>Yes — the prompt is <b>structured, unambiguous language</b>, not vibes. It specifies particle count, rotation model, palette stops, motion behaviour and container format. Paste it into Claude, Cursor, v0 or Copilot and you get a working scene back.</p></div>
+    </div>
+    <div class="faq-item reveal" data-d="3">
+      <div class="faq-q">Can I put content over it?<span class="arr">▾</span></div>
+      <div class="faq-a"><p>That's the point. The galaxy sits behind your hero at <b>subtle luminance</b> — text stays readable because the core glow is composed around a dark centre, not through it. Drop opacity if you want it quieter.</p></div>
+    </div>
+    <div class="faq-item reveal" data-d="3">
+      <div class="faq-q">Is it accessible?<span class="arr">▾</span></div>
+      <div class="faq-a"><p>Motion respects <b>prefers-reduced-motion</b> — animations collapse to near-zero for users who ask for calm. The canvas is decorative and aria-hidden; nothing structural depends on it.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div class="cta-card reveal">
+    <h2>Stop shipping<br><em>flat pages.</em></h2>
+    <p>One prompt. One file. A galaxy your users can feel.</p>
+    <div class="cta-row-center">
+      <a class="btn-primary" href="#prompt">Copy the prompt
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+      <a class="btn-ghost" href="https://www.getlayers.ai/3d-scenes" target="_blank" rel="noopener">Explore all scenes</a>
+    </div>
+  </div>
+</div>
+
 <footer>
   <span>PINWHEEL — a layer, not a template</span>
   <div class="f-links"><a href="#">Library</a><a href="#">Licence</a><a href="#">GetLayers</a></div>
@@ -282,50 +500,57 @@ footer a:hover{color:var(--text)}
 <div class="toast" id="toast">Prompt copied to clipboard</div>
 
 <script>
-/* ============ PINWHEEL GALAXY — pure canvas, no deps ============ */
-(() => {
-  const cv = document.getElementById('galaxy');
-  const ctx = cv.getContext('2d');
+/* ============ GALAXY ENGINE (shared by hero + tuner) ============ */
+const PALETTES = {
+  aurora: { core:[255,220,170], mid:[139,124,246], rim:[110,195,255], glow:'139,124,246', coreGlow:'255,224,178' },
+  ember:  { core:[255,225,190], mid:[255,140,60],  rim:[255,60,90],   glow:'255,110,60',  coreGlow:'255,214,170' },
+  glacier:{ core:[240,250,255], mid:[140,190,255], rim:[80,110,255],  glow:'120,170,255', coreGlow:'230,244,255' },
+  neon:   { core:[255,230,250], mid:[255,80,200],  rim:[80,140,255],  glow:'255,80,200',  coreGlow:'255,224,244' }
+};
+
+function makeGalaxy(canvas, opts) {
+  const ctx = canvas.getContext('2d');
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
   let W, H, CX, CY, R;
   let mouseX = 0, mouseY = 0, mx = 0, my = 0;
-
-  const ARMS = 3, CORE = .16;
   const stars = [], field = [];
+  const cfg = Object.assign({ count: 2400, arms: 3, spin: 1, tilt: .58, palette: 'aurora' }, opts || {});
+  let pal = PALETTES[cfg.palette];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function mix(c1, c2, t) { return [lerp(c1[0],c2[0],t)|0, lerp(c1[1],c2[1],t)|0, lerp(c1[2],c2[2],t)|0]; }
 
   function resize() {
-    W = cv.clientWidth; H = cv.clientHeight;
-    cv.width = W * DPR; cv.height = H * DPR;
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    CX = W / 2; CY = H * .46;
-    R = Math.min(W, H) * .34;
+    CX = W / 2; CY = H * .5;
+    R = Math.min(W, H) * .38;
   }
 
   function build() {
     stars.length = 0; field.length = 0;
-    // spiral arms
-    for (let i = 0; i < 2400; i++) {
-      const t = Math.pow(Math.random(), .58);            // denser core
-      const arm = (i % ARMS) * (Math.PI * 2 / ARMS);
+    for (let i = 0; i < cfg.count; i++) {
+      const t = Math.pow(Math.random(), .58);
+      const arm = (i % cfg.arms) * (Math.PI * 2 / cfg.arms);
       const angle = arm + t * 4.6 + (Math.random() - .5) * (1.25 - t * .75);
-      const r = CORE + t * (1 - CORE);
+      const r = .16 + t * .84;
       const jitter = (Math.random() - .5) * .05 * (1.4 - t);
-      // palette: warm core → violet → cyan rim
-      let cr, cg, cb;
-      if (t < .22) { const m = t / .22; cr = 255; cg = 210 + m * 20; cb = 160 + m * 60; }
-      else if (t < .62) { const m = (t - .22) / .4; cr = 255 - m * 116; cg = 230 - m * 98; cb = 220 - m * 40; }
-      else { const m = (t - .62) / .38; cr = 139 - m * 25; cg = 132 + m * 63; cb = 246 - m * 0; }
-      const isStar = Math.random() < .06;                 // bright specks
+      let col;
+      if (t < .22) col = mix(pal.core, pal.mid, t / .22 * .5);
+      else if (t < .62) col = mix(pal.mid, pal.mid, 0);
+      else col = mix(pal.mid, pal.rim, (t - .62) / .38);
+      if (t >= .22 && t < .62) col = mix(mix(pal.core, pal.mid, .5), pal.mid, (t - .22) / .4);
+      const isStar = Math.random() < .06;
       stars.push({
         r, a: angle + jitter,
         w: isStar ? 1.6 + Math.random() * 1.3 : .5 + Math.random() * 1.1,
         o: isStar ? .95 : .28 + Math.random() * .5,
-        c: isStar ? '255,255,255' : `${cr|0},${cg|0},${cb|0}`,
+        c: isStar ? '255,255,255' : `${col[0]},${col[1]},${col[2]}`,
         tw: Math.random() * Math.PI * 2, tws: .4 + Math.random() * 1.4,
-        sp: .055 / (0.25 + t * 1.15)                      // differential rotation
+        sp: .055 / (0.25 + t * 1.15)
       });
     }
-    // background starfield
     for (let i = 0; i < 160; i++) {
       field.push({ x: Math.random(), y: Math.random(), w: Math.random() * 1.2 + .3,
         o: .12 + Math.random() * .5, tw: Math.random() * Math.PI * 2, tws: .3 + Math.random() });
@@ -336,10 +561,8 @@ footer a:hover{color:var(--text)}
   function frame(now) {
     const dt = Math.min((now - last) / 1000, .05); last = now; T += dt;
     mx += (mouseX - mx) * .04; my += (mouseY - my) * .04;
-
     ctx.clearRect(0, 0, W, H);
 
-    // starfield (parallax opposite of mouse)
     ctx.save(); ctx.translate(-mx * 12, -my * 8);
     for (const s of field) {
       const o = s.o * (.55 + .45 * Math.sin(T * s.tws + s.tw));
@@ -348,31 +571,28 @@ footer a:hover{color:var(--text)}
     }
     ctx.restore();
 
-    // core glow
     const g = ctx.createRadialGradient(CX - mx * 20, CY - my * 14, 0, CX - mx * 20, CY - my * 14, R * .55);
-    g.addColorStop(0, 'rgba(255,224,178,.32)');
-    g.addColorStop(.35, 'rgba(139,124,246,.14)');
-    g.addColorStop(1, 'rgba(139,124,246,0)');
+    g.addColorStop(0, `rgba(${pal.coreGlow},.30)`);
+    g.addColorStop(.35, `rgba(${pal.glow},.13)`);
+    g.addColorStop(1, `rgba(${pal.glow},0)`);
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // galaxy
     ctx.save();
     ctx.translate(CX - mx * 26, CY - my * 18);
     ctx.globalCompositeOperation = 'lighter';
     for (const p of stars) {
-      const a = p.a + T * p.sp;
+      const a = p.a + T * p.sp * cfg.spin;
       const r = p.r * R;
-      const x = Math.cos(a) * r, y = Math.sin(a) * r * .58;   // tilt
+      const x = Math.cos(a) * r, y = Math.sin(a) * r * cfg.tilt;
       const o = p.o * (.7 + .3 * Math.sin(T * p.tws + p.tw));
       ctx.fillStyle = `rgba(${p.c},${o.toFixed(3)})`;
       ctx.fillRect(x, y, p.w, p.w);
     }
-    // hot core
     const cg = ctx.createRadialGradient(0, 0, 0, 0, 0, R * .18);
-    cg.addColorStop(0, 'rgba(255,240,214,.85)');
-    cg.addColorStop(.5, 'rgba(255,214,160,.25)');
-    cg.addColorStop(1, 'rgba(255,214,160,0)');
+    cg.addColorStop(0, `rgba(${pal.coreGlow},.85)`);
+    cg.addColorStop(.5, `rgba(${pal.glow},.25)`);
+    cg.addColorStop(1, `rgba(${pal.glow},0)`);
     ctx.fillStyle = cg;
     ctx.beginPath(); ctx.arc(0, 0, R * .18, 0, 7); ctx.fill();
     ctx.restore();
@@ -380,13 +600,85 @@ footer a:hover{color:var(--text)}
     requestAnimationFrame(frame);
   }
 
-  window.addEventListener('resize', () => { resize(); build(); });
-  window.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth - .5) * 2;
-    mouseY = (e.clientY / window.innerHeight - .5) * 2;
+  canvas.addEventListener('mousemove', e => {
+    const b = canvas.getBoundingClientRect();
+    mouseX = ((e.clientX - b.left) / b.width - .5) * 2;
+    mouseY = ((e.clientY - b.top) / b.height - .5) * 2;
   });
+  canvas.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
+  window.addEventListener('resize', () => { resize(); });
+
   resize(); build(); requestAnimationFrame(frame);
-})();
+  return {
+    rebuild(o) {
+      Object.assign(cfg, o || {});
+      pal = PALETTES[cfg.palette] || PALETTES.aurora;
+      build();
+    },
+    get cfg() { return cfg; }
+  };
+}
+
+/* hero galaxy */
+const heroGalaxy = makeGalaxy(document.getElementById('galaxy'), { tilt: .58 });
+
+/* ============ tuner ============ */
+const tuneGalaxy = makeGalaxy(document.getElementById('tuneCanvas'), { tilt: .58 });
+const $ = id => document.getElementById(id);
+const rCount = $('rCount'), rArms = $('rArms'), rSpin = $('rSpin'), rTilt = $('rTilt');
+const PAL_NAMES = { aurora:'warm white core → violet arms → cyan rim', ember:'fire core → amber arms → red rim', glacier:'ice white core → pale blue arms → deep blue rim', neon:'magenta core → pink arms → electric blue rim' };
+
+function currentPrompt() {
+  const c = +rCount.value, a = +rArms.value, s = +rSpin.value, t = +rTilt.value, p = document.querySelector('.swatch.on').dataset.p;
+  return `scene: pinwheel galaxy, ${a} spiral arms, ${c.toLocaleString()} particles
+rotation: differential — inner fast, outer slow${s !== 1 ? `, global speed ${s.toFixed(1)}×` : ''}
+palette: ${PAL_NAMES[p]}
+tilt: ${t.toFixed(2)} vertical squash (edge-on 0.15 → face-on 1.0)
+motion: slow drift, mouse parallax, star twinkle
+container: single HTML file, no dependencies`;
+}
+
+function syncPromptBox() {
+  const p = document.querySelector('.swatch.on').dataset.p;
+  const c = +rCount.value, a = +rArms.value;
+  $('oCount').textContent = c.toLocaleString();
+  $('oArms').textContent = a;
+  $('oSpin').textContent = (+rSpin.value).toFixed(1) + '×';
+  $('oTilt').textContent = (+rTilt.value).toFixed(2);
+  document.querySelector('.prompt-box').innerHTML =
+    `<span class="k">scene</span>: pinwheel galaxy, ${a} spiral arms, <span class="s">${c.toLocaleString()} particles</span><br>` +
+    `<span class="k">rotation</span>: differential — inner fast, outer slow${+rSpin.value !== 1 ? `, <span class="s">${(+rSpin.value).toFixed(1)}× speed</span>` : ''}<br>` +
+    `<span class="k">palette</span>: ${PAL_NAMES[p]}<br>` +
+    `<span class="k">tilt</span>: ${(+rTilt.value).toFixed(2)} <span class="s">(0.15 edge-on → 1.0 face-on)</span><br>` +
+    `<span class="k">motion</span>: slow drift, mouse parallax, star twinkle<br>` +
+    `<span class="k">container</span>: single HTML file, no dependencies`;
+}
+
+function applyTune() {
+  tuneGalaxy.rebuild({
+    count: +rCount.value, arms: +rArms.value,
+    spin: +rSpin.value, tilt: +rTilt.value,
+    palette: document.querySelector('.swatch.on').dataset.p
+  });
+  syncPromptBox();
+}
+
+[rCount, rArms, rSpin, rTilt].forEach(r => r.addEventListener('input', applyTune));
+document.querySelectorAll('.swatch').forEach(s => s.addEventListener('click', () => {
+  document.querySelectorAll('.swatch').forEach(x => x.classList.remove('on'));
+  s.classList.add('on');
+  applyTune();
+}));
+$('resetBtn').addEventListener('click', () => {
+  rCount.value = 2400; rArms.value = 3; rSpin.value = 1; rTilt.value = .58;
+  document.querySelectorAll('.swatch').forEach(x => x.classList.remove('on'));
+  document.querySelector('.swatch[data-p=aurora]').classList.add('on');
+  applyTune();
+});
+syncPromptBox();
+
+/* ============ faq ============ */
+document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => q.parentElement.classList.toggle('open')));
 
 /* ============ scroll reveal ============ */
 const io = new IntersectionObserver(es => es.forEach(e => {
@@ -410,12 +702,8 @@ const cio = new IntersectionObserver(es => es.forEach(e => {
 document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
 /* ============ copy prompt ============ */
-const PROMPT = `scene: pinwheel galaxy, spiral arms, 2,400 particles
-rotation: differential — inner fast, outer slow
-palette: warm white core → violet arms → cyan rim
-motion: slow drift, mouse parallax, star twinkle
-container: single HTML file, no dependencies`;
 document.getElementById('copyBtn').addEventListener('click', async function () {
+  const PROMPT = currentPrompt();
   try { await navigator.clipboard.writeText(PROMPT); }
   catch (e) {
     const ta = document.createElement('textarea'); ta.value = PROMPT;
