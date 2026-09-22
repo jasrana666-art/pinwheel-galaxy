@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pinwheel Galaxy — A galaxy, in your interface</title>
+<meta name="description" content="Pinwheel Galaxy — a cinematic 3D scene layer. Real-time particles, one prompt, zero dependencies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040409;
+  --bg2:#08080f;
+  --glass:rgba(255,255,255,.035);
+  --glass-strong:rgba(255,255,255,.06);
+  --stroke:rgba(255,255,255,.08);
+  --stroke-hi:rgba(255,255,255,.16);
+  --text:#eef0f6;
+  --muted:#9a9db1;
+  --dim:#5d6075;
+  --violet:#8b7cf6;
+  --cyan:#6ec3ff;
+  --warm:#ffd9a0;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Inter',-apple-system,'Segoe UI',sans-serif;
+  --mono:'SF Mono',Consolas,'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(139,124,246,.35)}
+
+/* ---------- grain + vignette ---------- */
+body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%);}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 2.5rem;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(4,4,9,.45);border-bottom:1px solid rgba(255,255,255,.05);
+  animation:navIn 1s cubic-bezier(.2,.8,.2,1) .2s both}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:600;letter-spacing:.14em;font-size:.82rem;text-transform:uppercase}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,var(--violet));box-shadow:0 0 12px rgba(139,124,246,.9);animation:pulse 3.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(139,124,246,.7)}50%{box-shadow:0 0 20px rgba(139,124,246,1)}}
+.nav-links{display:flex;gap:2.2rem;font-size:.85rem;color:var(--muted)}
+.nav-links a{color:var(--muted);text-decoration:none;transition:color .3s;position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:linear-gradient(90deg,var(--violet),var(--cyan));transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-size:.8rem;font-weight:600;letter-spacing:.05em;padding:.6rem 1.3rem;border-radius:999px;
+  border:1px solid var(--stroke-hi);color:var(--text);text-decoration:none;background:var(--glass);
+  backdrop-filter:blur(10px);transition:all .35s cubic-bezier(.2,.8,.2,1)}
+.nav-cta:hover{border-color:rgba(139,124,246,.6);box-shadow:0 0 24px rgba(139,124,246,.25);transform:translateY(-1px)}
+@media(max-width:768px){.nav-links{display:none}nav{padding:1rem 1.4rem}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:8rem 1.5rem 5rem;overflow:hidden}
+#galaxy{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70vmin;height:70vmin;
+  background:radial-gradient(circle,rgba(139,124,246,.13),rgba(110,195,255,.05) 45%,transparent 70%);
+  filter:blur(10px);pointer-events:none;animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.75;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
+.hero-inner{position:relative;z-index:5;max-width:900px}
+
+.eyebrow{display:inline-flex;align-items:center;gap:.8rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim);padding:.55rem 1.2rem;border-radius:999px;
+  border:1px solid var(--stroke);background:var(--glass);backdrop-filter:blur(12px);
+  animation:riseIn 1.1s cubic-bezier(.2,.8,.2,1) .45s both}
+.eyebrow .tag{color:var(--violet)}
+.eyebrow .sep{opacity:.35}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,9vw,6.8rem);line-height:1.02;letter-spacing:-.015em;
+  margin:2rem 0 1.6rem;animation:riseIn 1.2s cubic-bezier(.2,.8,.2,1) .62s both}
+h1 .line{display:block;overflow:hidden}
+h1 .line span{display:inline-block;animation:lineUp 1.3s cubic-bezier(.16,1,.3,1) both}
+h1 .line:nth-child(2) span{animation-delay:.78s}
+@keyframes lineUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+h1 em{font-style:italic;background:linear-gradient(105deg,var(--warm) 5%,var(--violet) 45%,var(--cyan) 90%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(139,124,246,.25))}
+
+.hero-sub{color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);font-weight:300;max-width:560px;margin:0 auto 2.8rem;
+  animation:riseIn 1.2s cubic-bezier(.2,.8,.2,1) .95s both}
+.hero-sub b{color:var(--text);font-weight:500}
+
+.cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:riseIn 1.2s cubic-bezier(.2,.8,.2,1) 1.1s both}
+.btn-primary{position:relative;display:inline-flex;align-items:center;gap:.7rem;padding:.95rem 2.1rem;border-radius:999px;
+  font-size:.92rem;font-weight:600;text-decoration:none;color:#0a0714;letter-spacing:.01em;
+  background:linear-gradient(135deg,#b8a8ff,#8b7cf6 55%,#6ec3ff);transition:all .4s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 4px 30px rgba(139,124,246,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 44px rgba(139,124,246,.55)}
+.btn-primary svg{transition:transform .35s}
+.btn-primary:hover svg{transform:translateY(1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.7rem;padding:.95rem 2rem;border-radius:999px;font-size:.92rem;
+  font-weight:500;color:var(--text);text-decoration:none;border:1px solid var(--stroke-hi);
+  background:var(--glass);backdrop-filter:blur(12px);transition:all .4s cubic-bezier(.2,.8,.2,1)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:var(--glass-strong);transform:translateY(-2px)}
+
+/* ---------- stats strip ---------- */
+.stats{display:flex;gap:0;justify-content:center;margin-top:4.5rem;animation:riseIn 1.3s cubic-bezier(.2,.8,.2,1) 1.28s both}
+.stat{padding:0 2.6rem;border-left:1px solid var(--stroke);text-align:center}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-family:var(--serif);font-size:2rem;font-weight:400;letter-spacing:-.01em;
+  background:linear-gradient(180deg,#fff,#9a9db1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+@media(max-width:640px){.stats{flex-wrap:wrap;gap:1.2rem}.stat{border:none;padding:0 1rem}}
+
+/* ---------- scroll cue ---------- */
+.scroll-cue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--dim);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  animation:riseIn 1s ease 1.8s both}
+.scroll-cue .rail{width:1px;height:44px;background:linear-gradient(180deg,var(--dim),transparent);position:relative;overflow:hidden}
+.scroll-cue .rail::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;
+  background:linear-gradient(180deg,transparent,var(--violet));animation:drip 2.2s cubic-bezier(.4,0,.4,1) infinite}
+@keyframes drip{to{top:110%}}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:5;max-width:1180px;margin:0 auto;padding:7rem 1.5rem 4rem}
+.sec-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--violet);
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+.sec-label::after{content:"";height:1px;flex:1;max-width:180px;background:linear-gradient(90deg,rgba(139,124,246,.5),transparent)}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:1rem}
+h2 em{font-style:italic;color:var(--violet)}
+.sec-sub{color:var(--muted);font-weight:300;max-width:520px;font-size:1.02rem}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal[data-d="1"]{transition-delay:.12s}.reveal[data-d="2"]{transition-delay:.24s}.reveal[data-d="3"]{transition-delay:.36s}
+
+/* ---------- glass cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;margin-top:3.4rem}
+.card{position:relative;padding:2rem 1.8rem;border-radius:20px;border:1px solid var(--stroke);
+  background:linear-gradient(160deg,var(--glass-strong),var(--glass));
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);overflow:hidden;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:linear-gradient(140deg,rgba(255,255,255,.22),transparent 35%,transparent 65%,rgba(139,124,246,.28));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .5s}
+.card:hover{transform:translateY(-6px);border-color:var(--stroke-hi);box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 40px rgba(139,124,246,.08)}
+.card:hover::before{opacity:1}
+.card-num{font-family:var(--mono);font-size:.68rem;color:var(--dim);letter-spacing:.2em;margin-bottom:1.6rem;display:block}
+.card-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;
+  background:linear-gradient(160deg,rgba(139,124,246,.18),rgba(110,195,255,.08));border:1px solid rgba(139,124,246,.25);
+  margin-bottom:1.4rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.card h3{font-size:1.08rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.55rem}
+.card p{color:var(--muted);font-size:.92rem;font-weight:300}
+.card .glow{position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,124,246,.16),transparent 70%);opacity:0;transition:opacity .6s}
+.card:hover .glow{opacity:1}
+
+/* ---------- prompt band ---------- */
+.prompt-band{margin-top:5rem;border-radius:24px;position:relative;overflow:hidden;
+  border:1px solid var(--stroke);background:linear-gradient(160deg,rgba(139,124,246,.07),rgba(110,195,255,.03) 60%,var(--glass));
+  backdrop-filter:blur(24px);padding:3.2rem 2.6rem;display:grid;grid-template-columns:1.2fr .8fr;gap:2.5rem;align-items:center}
+@media(max-width:860px){.prompt-band{grid-template-columns:1fr}}
+.prompt-band h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.prompt-box{font-family:var(--mono);font-size:.78rem;line-height:1.75;color:var(--muted);
+  background:rgba(4,4,9,.6);border:1px solid var(--stroke);border-radius:14px;padding:1.3rem 1.4rem;position:relative}
+.prompt-box::before{content:"PROMPT";position:absolute;top:-9px;left:16px;font-size:.58rem;letter-spacing:.3em;
+  color:var(--violet);background:var(--bg);padding:0 .5rem}
+.prompt-box .k{color:var(--cyan)}
+.prompt-box .s{color:var(--warm)}
+.copy-btn{margin-top:1.1rem;width:100%;padding:.8rem;border-radius:10px;border:1px solid rgba(139,124,246,.4);
+  background:rgba(139,124,246,.12);color:var(--text);font-family:var(--sans);font-size:.85rem;font-weight:600;
+  cursor:pointer;transition:all .35s;letter-spacing:.03em}
+.copy-btn:hover{background:rgba(139,124,246,.22);box-shadow:0 0 24px rgba(139,124,246,.25)}
+.copy-btn.done{border-color:rgba(110,231,183,.5);background:rgba(110,231,183,.12);color:#9ff0cf}
+
+/* ---------- footer ---------- */
+footer{position:relative;z-index:5;border-top:1px solid var(--stroke);margin-top:4rem;
+  padding:2.4rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+  color:var(--dim);font-size:.8rem;font-family:var(--mono);letter-spacing:.08em}
+footer .f-links{display:flex;gap:1.8rem}
+footer a{color:var(--dim);text-decoration:none;transition:color .3s}
+footer a:hover{color:var(--text)}
+
+/* toast */
+.toast{position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%) translateY(90px);z-index:200;
+  padding:.8rem 1.6rem;border-radius:999px;border:1px solid rgba(139,124,246,.5);
+  background:rgba(10,8,20,.85);backdrop-filter:blur(16px);font-size:.86rem;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="brand-dot"></span>Pinwheel</div>
+  <div class="nav-links">
+    <a href="#scene">Scene</a><a href="#craft">Craft</a><a href="#prompt">Prompt</a>
+  </div>
+  <a class="nav-cta" href="#prompt">Get the layer</a>
+</nav>
+
+<header class="hero">
+  <canvas id="galaxy"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="tag">3D Scene</span><span class="sep">·</span><span>Galaxy &amp; Space</span><span class="sep">·</span><span>Real-time</span></div>
+    <h1>
+      <span class="line"><span>A galaxy,</span></span>
+      <span class="line"><span><em>in your interface.</em></span></span>
+    </h1>
+    <p class="hero-sub">A hundred thousand particles, one spiral, sixty frames a second — <b>no video, no libraries, no weight</b>. Just light, arranged with intent.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="#prompt">
+        Copy the prompt
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+      <a class="btn-ghost" href="#craft">How it's built</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="2400">0</b><span>Particles</span></div>
+      <div class="stat"><b data-count="60">0</b><span>FPS target</span></div>
+      <div class="stat"><b data-count="0">0</b><span>Dependencies</span></div>
+      <div class="stat"><b data-count="14">0</b><span>KB, self-contained</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="rail"></div></div>
+</header>
+
+<section id="craft">
+  <div class="sec-label reveal">The craft</div>
+  <h2 class="reveal" data-d="1">Depth is not decoration.<br><em>It's direction.</em></h2>
+  <p class="sec-sub reveal" data-d="2">Every layer ships as a prompt you can paste into the AI that writes your code. This one arrives with its motion already wired.</p>
+  <div class="cards">
+    <div class="card reveal" data-d="1"><div class="glow"></div>
+      <span class="card-num">01 — MOTION</span>
+      <div class="card-icon">🌀</div>
+      <h3>Differential rotation</h3>
+      <p>The core spins faster than the rim, exactly like a real spiral — so the arms stay alive instead of sliding like a decal.</p>
+    </div>
+    <div class="card reveal" data-d="2"><div class="glow"></div>
+      <span class="card-num">02 — LIGHT</span>
+      <div class="card-icon">✦</div>
+      <h3>Physically-honest glow</h3>
+      <p>Warm stellar core, cold violet arms, additive blending. No bloom pass needed — the brightness is composed, not faked.</p>
+    </div>
+    <div class="card reveal" data-d="3"><div class="glow"></div>
+      <span class="card-num">03 — WEIGHT</span>
+      <div class="card-icon">⌬</div>
+      <h3>Kilobytes, not megabytes</h3>
+      <p>Pure canvas math in one file. It lands instantly on a phone connection and never asks for a WebGL context.</p>
+    </div>
+  </div>
+</section>
+
+<section id="prompt">
+  <div class="prompt-band reveal">
+    <div>
+      <div class="sec-label">One prompt, one scene</div>
+      <h2>Take it.<br><em>Make it yours.</em></h2>
+      <p class="sec-sub">Copy this into Claude, Cursor, v0, or whatever writes your code. It recreates the scene — then you tune the mood live.</p>
+    </div>
+    <div>
+      <div class="prompt-box">
+        <span class="k">scene</span>: pinwheel galaxy, spiral arms, <span class="s">2,400 particles</span><br>
+        <span class="k">rotation</span>: differential — inner fast, outer slow<br>
+        <span class="k">palette</span>: warm white core → violet arms → cyan rim<br>
+        <span class="k">motion</span>: slow drift, mouse parallax, star twinkle<br>
+        <span class="k">container</span>: single HTML file, no dependencies
+      </div>
+      <button class="copy-btn" id="copyBtn">Copy prompt</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>PINWHEEL — a layer, not a template</span>
+  <div class="f-links"><a href="#">Library</a><a href="#">Licence</a><a href="#">GetLayers</a></div>
+</footer>
+
+<div class="toast" id="toast">Prompt copied to clipboard</div>
+
+<script>
+/* ============ PINWHEEL GALAXY — pure canvas, no deps ============ */
+(() => {
+  const cv = document.getElementById('galaxy');
+  const ctx = cv.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W, H, CX, CY, R;
+  let mouseX = 0, mouseY = 0, mx = 0, my = 0;
+
+  const ARMS = 3, CORE = .16;
+  const stars = [], field = [];
+
+  function resize() {
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    CX = W / 2; CY = H * .46;
+    R = Math.min(W, H) * .34;
+  }
+
+  function build() {
+    stars.length = 0; field.length = 0;
+    // spiral arms
+    for (let i = 0; i < 2400; i++) {
+      const t = Math.pow(Math.random(), .58);            // denser core
+      const arm = (i % ARMS) * (Math.PI * 2 / ARMS);
+      const angle = arm + t * 4.6 + (Math.random() - .5) * (1.25 - t * .75);
+      const r = CORE + t * (1 - CORE);
+      const jitter = (Math.random() - .5) * .05 * (1.4 - t);
+      // palette: warm core → violet → cyan rim
+      let cr, cg, cb;
+      if (t < .22) { const m = t / .22; cr = 255; cg = 210 + m * 20; cb = 160 + m * 60; }
+      else if (t < .62) { const m = (t - .22) / .4; cr = 255 - m * 116; cg = 230 - m * 98; cb = 220 - m * 40; }
+      else { const m = (t - .62) / .38; cr = 139 - m * 25; cg = 132 + m * 63; cb = 246 - m * 0; }
+      const isStar = Math.random() < .06;                 // bright specks
+      stars.push({
+        r, a: angle + jitter,
+        w: isStar ? 1.6 + Math.random() * 1.3 : .5 + Math.random() * 1.1,
+        o: isStar ? .95 : .28 + Math.random() * .5,
+        c: isStar ? '255,255,255' : `${cr|0},${cg|0},${cb|0}`,
+        tw: Math.random() * Math.PI * 2, tws: .4 + Math.random() * 1.4,
+        sp: .055 / (0.25 + t * 1.15)                      // differential rotation
+      });
+    }
+    // background starfield
+    for (let i = 0; i < 160; i++) {
+      field.push({ x: Math.random(), y: Math.random(), w: Math.random() * 1.2 + .3,
+        o: .12 + Math.random() * .5, tw: Math.random() * Math.PI * 2, tws: .3 + Math.random() });
+    }
+  }
+
+  let last = performance.now(), T = 0;
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, .05); last = now; T += dt;
+    mx += (mouseX - mx) * .04; my += (mouseY - my) * .04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // starfield (parallax opposite of mouse)
+    ctx.save(); ctx.translate(-mx * 12, -my * 8);
+    for (const s of field) {
+      const o = s.o * (.55 + .45 * Math.sin(T * s.tws + s.tw));
+      ctx.fillStyle = `rgba(255,255,255,${o.toFixed(3)})`;
+      ctx.fillRect(s.x * W, s.y * H, s.w, s.w);
+    }
+    ctx.restore();
+
+    // core glow
+    const g = ctx.createRadialGradient(CX - mx * 20, CY - my * 14, 0, CX - mx * 20, CY - my * 14, R * .55);
+    g.addColorStop(0, 'rgba(255,224,178,.32)');
+    g.addColorStop(.35, 'rgba(139,124,246,.14)');
+    g.addColorStop(1, 'rgba(139,124,246,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    // galaxy
+    ctx.save();
+    ctx.translate(CX - mx * 26, CY - my * 18);
+    ctx.globalCompositeOperation = 'lighter';
+    for (const p of stars) {
+      const a = p.a + T * p.sp;
+      const r = p.r * R;
+      const x = Math.cos(a) * r, y = Math.sin(a) * r * .58;   // tilt
+      const o = p.o * (.7 + .3 * Math.sin(T * p.tws + p.tw));
+      ctx.fillStyle = `rgba(${p.c},${o.toFixed(3)})`;
+      ctx.fillRect(x, y, p.w, p.w);
+    }
+    // hot core
+    const cg = ctx.createRadialGradient(0, 0, 0, 0, 0, R * .18);
+    cg.addColorStop(0, 'rgba(255,240,214,.85)');
+    cg.addColorStop(.5, 'rgba(255,214,160,.25)');
+    cg.addColorStop(1, 'rgba(255,214,160,0)');
+    ctx.fillStyle = cg;
+    ctx.beginPath(); ctx.arc(0, 0, R * .18, 0, 7); ctx.fill();
+    ctx.restore();
+
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => { resize(); build(); });
+  window.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - .5) * 2;
+    mouseY = (e.clientY / window.innerHeight - .5) * 2;
+  });
+  resize(); build(); requestAnimationFrame(frame);
+})();
+
+/* ============ scroll reveal ============ */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .18 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============ stat counters ============ */
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target, target = +el.dataset.count;
+  if (target === 0) { el.textContent = '0'; cio.unobserve(el); return; }
+  const t0 = performance.now(), dur = 1600;
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1), ease = 1 - Math.pow(1 - p, 4);
+    el.textContent = Math.round(target * ease).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+  cio.unobserve(el);
+}), { threshold: .6 });
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+/* ============ copy prompt ============ */
+const PROMPT = `scene: pinwheel galaxy, spiral arms, 2,400 particles
+rotation: differential — inner fast, outer slow
+palette: warm white core → violet arms → cyan rim
+motion: slow drift, mouse parallax, star twinkle
+container: single HTML file, no dependencies`;
+document.getElementById('copyBtn').addEventListener('click', async function () {
+  try { await navigator.clipboard.writeText(PROMPT); }
+  catch (e) {
+    const ta = document.createElement('textarea'); ta.value = PROMPT;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  }
+  this.textContent = 'Copied ✓'; this.classList.add('done');
+  const t = document.getElementById('toast'); t.classList.add('show');
+  setTimeout(() => { t.classList.remove('show'); this.textContent = 'Copy prompt'; this.classList.remove('done'); }, 2000);
+});
+</script>
+</body>
+</html>
