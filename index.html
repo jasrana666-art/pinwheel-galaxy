@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pinwheel — Creative Developer Portfolio</title>
+    <title>Pinwheel — Product Design & Creative Development</title>
     <meta
       name="description"
-      content="Creative developer and designer crafting cinematic, product-driven digital experiences."
+      content="Pinwheel designs and builds immersive digital products, interfaces, and motion-led experiences for ambitious brands."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,239 +14,977 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --bg: #04070d;
+        --bg-soft: #0b1220;
+        --panel: rgba(255, 255, 255, 0.02);
+        --panel-strong: rgba(255, 255, 255, 0.06);
+        --stroke: rgba(255, 255, 255, 0.08);
+        --stroke-strong: rgba(255, 255, 255, 0.14);
+        --text: #edf3ff;
+        --muted: #9aa8bf;
+        --dim: #667089;
+        --violet: #8d7cf6;
+        --cyan: #6ec3ff;
+        --warm: #f7d19b;
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --sans: "Inter", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: radial-gradient(circle at top, #0c1220 0%, #05070d 36%, #020407 100%);
+        color: var(--text);
+        font-family: var(--sans);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      canvas {
+        display: block;
+        max-width: 100%;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: rgba(4, 7, 13, 0.55);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--stroke);
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .brand-mark {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #fff 0%, var(--violet) 70%);
+        box-shadow: 0 0 16px rgba(141, 122, 246, 0.9);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        transition: color 0.25s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .nav-button,
+      .button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+      }
+
+      .nav-button {
+        padding: 0.8rem 1.3rem;
+        border: 1px solid var(--stroke-strong);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .nav-button:hover,
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button {
+        padding: 0.95rem 1.6rem;
+        border: 1px solid var(--stroke-strong);
+      }
+
+      .primary {
+        background: linear-gradient(135deg, #b8a7ff, #8d7cf6 48%, #6ec3ff);
+        color: #0a0713;
+        box-shadow: 0 12px 30px rgba(141, 124, 246, 0.25);
+      }
+
+      .secondary {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+        border-color: var(--stroke);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 90vh;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        padding: 5rem 1.5rem 2rem;
+      }
+
+      #galaxy {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        opacity: 0.95;
+      }
+
+      .hero-glow {
+        position: absolute;
+        inset: 18% 8%;
+        background: radial-gradient(circle, rgba(141, 122, 246, 0.2), transparent 60%);
+        filter: blur(28px);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1.1rem;
+      }
+
+      .hero h1 {
+        font-family: var(--serif);
+        font-size: clamp(3.2rem, 8vw, 7rem);
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+        margin-bottom: 1rem;
+      }
+
+      .hero-copy {
+        max-width: 700px;
+        margin: 0 auto 1.7rem;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-meta {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem 1.4rem;
+        color: var(--muted);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .proof {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.2rem 1.5rem 3.5rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .proof-item {
+        padding: 1.4rem 1.2rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+      }
+
+      .proof-number {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-family: var(--serif);
+        font-size: clamp(2.1rem, 4vw, 3.2rem);
+        line-height: 1;
+      }
+
+      .proof-label {
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.5;
+      }
+
+      .section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 5rem 1.5rem 0;
+      }
+
+      .section-heading {
+        margin-bottom: 2.2rem;
+      }
+
+      .section-kicker {
+        color: var(--violet);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+
+      .section-heading h2 {
+        font-family: var(--serif);
+        font-size: clamp(2.5rem, 4vw, 4rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+
+      .projects {
+        display: grid;
+        gap: 1.1rem;
+      }
+
+      .project-card {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--stroke);
+        border-radius: 22px;
+        overflow: hidden;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .project-visual {
+        min-height: 260px;
+        border-right: 1px solid var(--stroke);
+      }
+
+      .visual-one {
+        background:
+          radial-gradient(circle at center, rgba(141, 122, 246, 0.4), transparent 30%),
+          linear-gradient(140deg, rgba(12, 17, 28, 1), rgba(5, 7, 13, 1) 42%, rgba(15, 20, 30, 1));
+      }
+
+      .visual-two {
+        background:
+          radial-gradient(circle at center, rgba(110, 195, 255, 0.45), transparent 30%),
+          linear-gradient(130deg, rgba(16, 20, 30, 1), rgba(5, 7, 13, 1) 55%);
+      }
+
+      .visual-three {
+        background:
+          radial-gradient(circle at center, rgba(255, 214, 153, 0.32), transparent 28%),
+          linear-gradient(135deg, rgba(16, 20, 24, 1), rgba(5, 7, 13, 1));
+      }
+
+      .project-content {
+        padding: 1.4rem 1.3rem;
+      }
+
+      .project-topline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.8rem;
+        color: var(--muted);
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .project-content h3 {
+        font-size: clamp(1.7rem, 2vw, 2.3rem);
+        margin-bottom: 0.7rem;
+      }
+
+      .project-content p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .project-content ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 1rem 0 1.2rem;
+      }
+
+      .project-content li {
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--stroke);
+        color: var(--muted);
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .text-link {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .process {
+        padding-top: 5.5rem;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .step {
+        padding: 1.7rem 1.3rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--stroke);
+        border-radius: 20px;
+      }
+
+      .step-number {
+        display: block;
+        margin-bottom: 0.9rem;
+        color: var(--violet);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .step h3 {
+        font-size: 1.45rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .step p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 1.5rem;
+      }
+
+      .about-copy p {
+        margin-bottom: 1rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .about-copy h2 {
+        font-family: var(--serif);
+        font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+        margin-bottom: 1rem;
+      }
+
+      .about-panel {
+        padding: 1.4rem;
+        border: 1px solid var(--stroke);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .about-panel h3 {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .about-panel ul {
+        list-style: none;
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .about-panel li {
+        padding: 0.7rem 0.8rem;
+        border-radius: 12px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.015);
+        color: var(--muted);
+      }
+
+      .testimonial {
+        padding-top: 5rem;
+      }
+
+      .testimonial blockquote {
+        font-family: var(--serif);
+        font-size: clamp(1.9rem, 3vw, 3.4rem);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        max-width: 860px;
+      }
+
+      .quote-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .quote-meta strong {
+        font-size: 0.9rem;
+      }
+
+      .quote-meta span {
+        color: var(--muted);
+      }
+
+      .footer {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4.5rem 1.5rem 3rem;
+      }
+
+      .footer-cta {
+        padding: 3rem 1.5rem;
+        border: 1px solid var(--stroke);
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(141, 122, 246, 0.12), rgba(110, 195, 255, 0.04), rgba(6, 7, 13, 0.8));
+        text-align: center;
+      }
+
+      .footer-cta h2 {
+        font-family: var(--serif);
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .bottom-bar {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        color: var(--muted);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+
+        .project-card {
+          grid-template-columns: 1fr;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .steps {
+          grid-template-columns: 1fr;
+        }
+
+        .proof {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          min-height: 80vh;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.8rem, 15vw, 4rem);
+        }
+
+        .button,
+        .nav-button {
+          width: 100%;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .nav {
+          padding: 0.9rem 1rem;
+        }
+
+        .bottom-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <nav class="nav">
-          <a class="brand" href="#top" aria-label="Home">
-            <span class="brand-mark"></span>
-            <span class="brand-text">Pinwheel</span>
-          </a>
-          <div class="nav-links">
-            <a href="#work">Work</a>
-            <a href="#process">Process</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+    <header class="topbar">
+      <nav class="nav">
+        <a href="#top" class="brand" aria-label="Home">
+          <span class="brand-mark"></span>
+          <span>Pinwheel</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <a href="#contact" class="nav-button">Book a project</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <canvas id="galaxy" aria-hidden="true"></canvas>
+        <div class="hero-glow" aria-hidden="true"></div>
+
+        <div class="hero-inner reveal">
+          <p class="eyebrow">Creative developer • product designer</p>
+
+          <h1>
+            We build immersive<br />
+            digital products.
+          </h1>
+
+          <p class="hero-copy">
+            Designing and developing product experiences that feel cinematic,
+            premium, and built for momentum.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="button primary">View work</a>
+            <a href="#contact" class="button secondary">Let’s talk</a>
           </div>
-          <a class="nav-button" href="#contact">Let’s talk</a>
-        </nav>
-      </header>
 
-      <main id="top">
-        <section class="hero">
-          <canvas id="galaxy" aria-hidden="true"></canvas>
-          <div class="hero-glow" aria-hidden="true"></div>
+          <ul class="hero-meta">
+            <li>Product design</li>
+            <li>Creative engineering</li>
+            <li>Front-end systems</li>
+          </ul>
+        </div>
+      </section>
 
-          <div class="hero-inner reveal">
-            <p class="eyebrow">Creative developer • product designer</p>
-            <h1>
-              I design and build<br />
-              <span>cinematic digital experiences.</span>
-            </h1>
-            <p class="hero-copy">
-              I create calm, immersive interfaces for brands and products that need
-              more feeling, more clarity, and more momentum.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="#work">View work</a>
-              <a class="button secondary" href="#contact">Book a project</a>
+      <section class="proof reveal" aria-label="Proof">
+        <div class="proof-item">
+          <span class="proof-number">6+</span>
+          <span class="proof-label">years building digital experiences</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">20+</span>
+          <span class="proof-label">launches across product and brand</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">12</span>
+          <span class="proof-label">systems, pitches, and landing pages</span>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Selected work</p>
+          <h2>Product stories built for momentum.</h2>
+        </div>
+
+        <div class="projects">
+          <article class="project-card reveal">
+            <div class="project-visual visual-one"></div>
+            <div class="project-content">
+              <div class="project-topline">
+                <span>Experimental web</span>
+                <span>2026</span>
+              </div>
+              <h3>Pinwheel Galaxy</h3>
+              <p>
+                A cinematic, motion-led experience designed to translate
+                atmosphere into a premium product story.
+              </p>
+              <ul>
+                <li>Creative direction</li>
+                <li>UI/UX</li>
+                <li>Front-end motion</li>
+              </ul>
+              <a href="#contact" class="text-link">Discuss a similar build</a>
             </div>
-            <ul class="hero-meta" aria-label="Core services">
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-visual visual-two"></div>
+            <div class="project-content">
+              <div class="project-topline">
+                <span>Brand systems</span>
+                <span>2025</span>
+              </div>
+              <h3>Signal Studio</h3>
+              <p>
+                A brand experience system created to clarify positioning,
+                storytelling, and conversion-ready product messaging.
+              </p>
+              <ul>
+                <li>Brand systems</li>
+                <li>Launch design</li>
+                <li>Storytelling</li>
+              </ul>
+              <a href="#contact" class="text-link">Build with us</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-visual visual-three"></div>
+            <div class="project-content">
+              <div class="project-topline">
+                <span>AI product</span>
+                <span>2024</span>
+              </div>
+              <h3>Orbit Canvas</h3>
+              <p>
+                A concept interface aimed at making complex AI workflows feel
+                intentional, calm, and obviously useful.
+              </p>
+              <ul>
+                <li>UX strategy</li>
+                <li>Interaction design</li>
+                <li>Prototype systems</li>
+              </ul>
+              <a href="#contact" class="text-link">Start a project</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section process" id="process">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Process</p>
+          <h2>Focused, intentional, product-first.</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step reveal">
+            <span class="step-number">01</span>
+            <h3>Discover</h3>
+            <p>
+              We clarify the audience, positioning, and product story before a
+              single visual decision is made.
+            </p>
+          </article>
+
+          <article class="step reveal">
+            <span class="step-number">02</span>
+            <h3>Design</h3>
+            <p>
+              We shape the interface, content, and interaction patterns around
+              user intent and product clarity.
+            </p>
+          </article>
+
+          <article class="step reveal">
+            <span class="step-number">03</span>
+            <h3>Build</h3>
+            <p>
+              We develop polished front-end systems designed to scale, convert,
+              and feel premium in production.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p class="section-kicker">About</p>
+            <h2>Designing digital products with craft and intention.</h2>
+            <p>
+              We’re a creative developer and design partner helping teams turn
+              complex ideas into elegant, high-converting digital experiences.
+            </p>
+            <p>
+              Our work blends product strategy, interface design, and front-end
+              engineering to create products that feel sharp, premium, and easy to trust.
+            </p>
+          </div>
+
+          <div class="about-panel reveal">
+            <h3>Capabilities</h3>
+            <ul>
               <li>Product design</li>
+              <li>Interface systems</li>
+              <li>Creative engineering</li>
+              <li>Motion design</li>
               <li>Front-end development</li>
-              <li>Motion-driven experiences</li>
+              <li>Product storytelling</li>
             </ul>
           </div>
-        </section>
-
-        <section class="proof reveal" aria-label="Business proof">
-          <div class="proof-item">
-            <span class="proof-number">6+</span>
-            <span class="proof-label">years building digital products</span>
-          </div>
-          <div class="proof-item">
-            <span class="proof-number">20+</span>
-            <span class="proof-label">launches across product and brand</span>
-          </div>
-          <div class="proof-item">
-            <span class="proof-number">12</span>
-            <span class="proof-label">creative systems and landing experiences</span>
-          </div>
-        </section>
-
-        <section class="section" id="work">
-          <div class="section-heading reveal">
-            <p class="section-kicker">Selected work</p>
-            <h2>Recent projects built to feel memorable.</h2>
-          </div>
-
-          <div class="projects">
-            <article class="project-card reveal">
-              <div class="project-visual visual-one"></div>
-              <div class="project-content">
-                <div class="project-topline">
-                  <span>Experimental front-end</span>
-                  <span>2026</span>
-                </div>
-                <h3>Pinwheel Galaxy</h3>
-                <p>
-                  A cinematic landing page where motion, atmosphere, and product
-                  storytelling converge into one immersive experience.
-                </p>
-                <ul>
-                  <li>Creative direction</li>
-                  <li>UI/UX</li>
-                  <li>Front-end motion</li>
-                </ul>
-                <a href="#contact" class="text-link">Discuss a similar project</a>
-              </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-visual visual-two"></div>
-              <div class="project-content">
-                <div class="project-topline">
-                  <span>Brand experience</span>
-                  <span>2025</span>
-                </div>
-                <h3>Signal Studio</h3>
-                <p>
-                  A product storytelling system built to clarify complex offerings
-                  through elegant layouts, motion cues, and a sharper narrative.
-                </p>
-                <ul>
-                  <li>Brand positioning</li>
-                  <li>Landing page system</li>
-                  <li>Interactive storytelling</li>
-                </ul>
-                <a href="#contact" class="text-link">Explore a partnership</a>
-              </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-visual visual-three"></div>
-              <div class="project-content">
-                <div class="project-topline">
-                  <span>AI product interface</span>
-                  <span>2024</span>
-                </div>
-                <h3>Orbit Canvas</h3>
-                <p>
-                  A research-heavy interface concept that translated AI workflows into
-                  a calm, human-centered design language.
-                </p>
-                <ul>
-                  <li>UX strategy</li>
-                  <li>Prototype design</li>
-                  <li>Interaction systems</li>
-                </ul>
-                <a href="#contact" class="text-link">Start a conversation</a>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="section process" id="process">
-          <div class="section-heading reveal">
-            <p class="section-kicker">Process</p>
-            <h2>How I work — simple, focused, deliberate.</h2>
-          </div>
-
-          <div class="steps">
-            <article class="step reveal">
-              <span class="step-number">01</span>
-              <h3>Discover</h3>
-              <p>
-                I start by understanding your audience, your story, and the emotional
-                tone the experience should carry.
-              </p>
-            </article>
-
-            <article class="step reveal">
-              <span class="step-number">02</span>
-              <h3>Prototype</h3>
-              <p>
-                I shape the concept quickly, exploring structure, motion, and
-                messaging before polishing the system.
-              </p>
-            </article>
-
-            <article class="step reveal">
-              <span class="step-number">03</span>
-              <h3>Refine &amp; ship</h3>
-              <p>
-                I build with clarity and intent, balancing visual richness with a smooth,
-                frictionless user experience.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section about" id="about">
-          <div class="about-grid">
-            <div class="about-copy reveal">
-              <p class="section-kicker">About</p>
-              <h2>I build digital experiences with personality.</h2>
-              <p>
-                I’m a creative developer and designer focused on modern web experiences,
-                motion-rich interfaces, and product storytelling. I enjoy turning ambitious
-                ideas into interfaces that feel clear, confident, and memorable.
-              </p>
-              <p>
-                My work bridges design and front-end craft — blending aesthetics,
-                interaction, and systems thinking into experiences that connect with people.
-              </p>
-            </div>
-
-            <div class="about-panel reveal">
-              <h3>Expertise</h3>
-              <ul>
-                <li>Product design</li>
-                <li>Interface design systems</li>
-                <li>Front-end development</li>
-                <li>Motion design</li>
-                <li>Creative direction</li>
-                <li>Interactive storytelling</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section class="section testimonial reveal">
-          <p class="section-kicker">What people say</p>
-          <blockquote>
-            “The final experience felt elevated, thoughtful, and genuinely on-brand — not just visually strong, but strategically clear.”
-          </blockquote>
-          <div class="quote-meta">
-            <strong>Alex Martin</strong>
-            <span>Product lead, Signal Studio</span>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer" id="contact">
-        <div class="footer-cta reveal">
-          <p class="section-kicker">Let’s build something bold</p>
-          <h2>Ready for a thoughtful, immersive digital experience?</h2>
-          <div class="footer-actions">
-            <a class="button primary" href="mailto:hello@pinwheel.studio">hello@pinwheel.studio</a>
-            <a class="button secondary" href="https://github.com/jasrana666-art" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
         </div>
+      </section>
 
-        <div class="bottom-bar">
-          <span>Pinwheel</span>
-          <div class="footer-links">
-            <a href="#work">Work</a>
-            <a href="#process">Process</a>
-            <a href="#about">About</a>
-          </div>
+      <section class="section testimonial reveal">
+        <p class="section-kicker">What clients say</p>
+        <blockquote>
+          “The final experience felt extremely premium — not just visually
+          compelling, but strategically clear and product-minded from the first click.”
+        </blockquote>
+        <div class="quote-meta">
+          <strong>Alex Martin</strong>
+          <span>Product Lead, Signal Studio</span>
         </div>
-      </footer>
-    </div>
+      </section>
+    </main>
 
-    <script src="script.js"></script>
+    <footer class="footer" id="contact">
+      <div class="footer-cta reveal">
+        <p class="section-kicker">Let’s build something bold</p>
+        <h2>Ready to launch something exceptional?</h2>
+
+        <div class="footer-actions">
+          <a href="mailto:hello@pinwheel.studio" class="button primary">hello@pinwheel.studio</a>
+          <a href="https://github.com/jasrana666-art" class="button secondary" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <div class="bottom-bar">
+        <span>Pinwheel</span>
+        <div class="footer-links">
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const galaxyCanvas = document.getElementById('galaxy');
+
+      function createGalaxy(canvas) {
+        const ctx = canvas.getContext('2d');
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        let width = 0;
+        let height = 0;
+        let centerX = 0;
+        let centerY = 0;
+        let radius = 0;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let smoothX = 0;
+        let smoothY = 0;
+
+        const stars = [];
+        const dust = [];
+
+        function build() {
+          stars.length = 0;
+          dust.length = 0;
+
+          for (let i = 0; i < 2200; i++) {
+            const t = Math.random();
+            const arm = (i % 3) * (Math.PI * 2 / 3);
+            const angle = arm + t * 5 + (Math.random() - 0.5) * 1.1;
+            const spread = 0.12 + t * 0.88;
+            const size = Math.random() < 0.08 ? 2 : 1;
+
+            stars.push({
+              angle,
+              spread,
+              size,
+              alpha: 0.5 + Math.random() * 0.8,
+              twinkle: Math.random() * Math.PI * 2,
+              speed: 0.04 + Math.random() * 0.12,
+            });
+          }
+
+          for (let i = 0; i < 140; i++) {
+            dust.push({
+              x: Math.random(),
+              y: Math.random(),
+              s: 0.8 + Math.random() * 2,
+              a: 0.1 + Math.random() * 0.4,
+            });
+          }
+        }
+
+        function resize() {
+          width = canvas.clientWidth;
+          height = canvas.clientHeight;
+          canvas.width = width * dpr;
+          canvas.height = height * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          centerX = width / 2;
+          centerY = height / 2;
+          radius = Math.min(width, height) * 0.42;
+        }
+
+        function draw(t) {
+          ctx.clearRect(0, 0, width, height);
+
+          const glow = ctx.createRadialGradient(
+            centerX + smoothX * 18,
+            centerY + smoothY * 14,
+            0,
+            centerX + smoothX * 18,
+            centerY + smoothY * 14,
+            radius * 1.2
+          );
+
+          glow.addColorStop(0, 'rgba(141, 122, 246, 0.2)');
+          glow.addColorStop(0.45, 'rgba(110, 195, 255, 0.09)');
+          glow.addColorStop(1, 'rgba(110, 195, 255, 0)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, width, height);
+
+          ctx.save();
+          ctx.translate(centerX + smoothX * 18, centerY + smoothY * 14);
+
+          for (const dot of dust) {
+            const x = dot.x * width;
+            const y = dot.y * height;
+            ctx.fillStyle = `rgba(255,255,255,${dot.a})`;
+            ctx.fillRect(x, y, dot.s, dot.s);
+          }
+
+          for (const star of stars) {
+            const angle = star.angle + t * star.speed;
+            const orbit = star.spread * radius;
+            const x = Math.cos(angle) * orbit;
+            const y = Math.sin(angle) * orbit * 0.52;
+
+            ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+            ctx.fillRect(x, y, star.size, star.size);
+          }
+
+          const coreGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * 0.22);
+          coreGlow.addColorStop(0, 'rgba(255, 232, 182, 0.9)');
+          coreGlow.addColorStop(0.35, 'rgba(141, 122, 246, 0.36)');
+          coreGlow.addColorStop(1, 'rgba(141, 122, 246, 0)');
+          ctx.fillStyle = coreGlow;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius * 0.22, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+          requestAnimationFrame(draw);
+        }
+
+        canvas.addEventListener('pointermove', (event) => {
+          const rect = canvas.getBoundingClientRect();
+          mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+          mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+        });
+
+        canvas.addEventListener('pointerleave', () => {
+          mouseX = 0;
+          mouseY = 0;
+        });
+
+        function tick(time) {
+          smoothX += (mouseX - smoothX) * 0.04;
+          smoothY += (mouseY - smoothY) * 0.04;
+          draw(time * 0.001);
+        }
+
+        resize();
+        build();
+        requestAnimationFrame(tick);
+      }
+
+      createGalaxy(galaxyCanvas);
+
+      const revealEls = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.classList.add('in');
+            observer.unobserve(entry);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealEls.forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>
